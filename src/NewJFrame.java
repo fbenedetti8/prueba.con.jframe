@@ -1,11 +1,8 @@
-
-
 public class NewJFrame extends javax.swing.JFrame {
 
     public NewJFrame() {
         initComponents();
-        //guardado desactivado
-        btn_guardar.setEnabled(false);
+        //guardado activado
         
         
         
@@ -270,13 +267,14 @@ public class NewJFrame extends javax.swing.JFrame {
         if(requerido4.isVisible()){
             txt_email.setText("");
             requerido4.setVisible(false);
+            btn_guardar.setEnabled(false);
         }
         
     }//GEN-LAST:event_txt_emailMouseClicked
 
     private void txt_telefonoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txt_telefonoMouseClicked
         // TODO add your handling code here:
-        btn_guardar.setEnabled(true);
+        
         if(requerido3.isVisible()){
             txt_telefono.setText("");
             requerido3.setVisible(false);
@@ -294,6 +292,7 @@ public class NewJFrame extends javax.swing.JFrame {
         if(requerido2.isVisible()){
             txt_apellido.setText("");
             requerido2.setVisible(false);
+            btn_guardar.setEnabled(false);
         }
         
     }//GEN-LAST:event_txt_apellidoMouseClicked
@@ -319,7 +318,22 @@ public class NewJFrame extends javax.swing.JFrame {
 
     private void btn_guardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_guardarActionPerformed
         // TODO add your handling code here:
-        validar();
+        if(validar()) {
+        	String nombre = txt_nombre.getText();
+        	String apellido = txt_apellido.getText();
+        	String telefono = txt_telefono.getText();
+        	String email = txt_email.getText();
+        	
+        	Persona miPersona = new Persona();
+        	
+        	miPersona.setNombre(nombre);
+        	miPersona.setApellido(apellido);
+        	miPersona.setTelefono(telefono);
+        	miPersona.setEmail(email);
+        	
+        	miPersona.getApellido();
+        	//ConexionBDD.GuardarPersona(miPersona);
+        }
         
 
     }//GEN-LAST:event_btn_guardarActionPerformed
@@ -383,7 +397,8 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JTextField txt_telefono;
     // End of variables declaration//GEN-END:variables
 
-    private void validar() {
+    private boolean validar() {
+    	boolean listoParaGuardar = false;
         if(txt_nombre.getText().isEmpty()){
             requerido1.setVisible(true);
         }
@@ -396,9 +411,10 @@ public class NewJFrame extends javax.swing.JFrame {
         if(txt_email.getText().isEmpty()){
             requerido4.setVisible(true);
         }
-       
+        
+        listoParaGuardar = !requerido1.isVisible() && !requerido2.isVisible() && !requerido3.isVisible() && !requerido4.isVisible();
+       return listoParaGuardar;
     }
-    
     
 }
 
